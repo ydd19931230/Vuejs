@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>第一章的示例代码</title>
+	
+	<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<ul>
+			<li v-for="book in books">{{book.name}}</li>
+		</ul>
+	</div>
+</body>
+</html>
+<script>
+	/*简单的演示*/
+	var app = new Vue({
+		el:"#app",
+		data:{
+			books:[{name:"java"},{name:"springboot"},{name:"vuejs"}]
+		}
+	
+	});
+</script>
