@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>第二章-过滤器</title>
+	<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		{{date | formatDate(123) | justATest}}
+	</div>
+</body>
+</html>
+<script>
+	var padDate = function(value){
+		return value < 10 ? '0' + value : value;
+	}
+
+
+	var app = new Vue({
+		el:"#app",
+		data:{
+			date:new Date()
+		},
+		/*过滤器使用filters属性指定*/
+		filters:{
+			/*过滤器方法的第一个参数为被过滤的值 其余的参数将从第二个参数开始对应*/
+			formatDate:function(value){
+				console.info(arguments[1]);
+				var date = new Date(value);
+				var year = date.getFullYear();
+				/*date的month值从0开始到11所以要加1*/
+				var month = padDate(date.getMonth() + 1);
+				var day = padDate(date.getDate());
+				var hours = padDate(date.getHours());
+				var minutes = padDate(date.getMinutes());
+				var seconds = padDate(date.getSeconds());
+				return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+			},
+			/*过滤器也可以串联 后面的过滤器的value值为前一个过滤器的返回值 这点要注意*/
+			justATest:function(value){
+				console.info('just a test');
+				return value;
+			}
+		},
+		mounted:function(){
+			var _this = this;
+			this.timer = setInterval(function(){
+				_this.date = new Date();
+			},1000);
+		},
+		beforeDestory:function(){
+			if(this.timer){
+				clearInterval(this.timer);
+			}
+		}
+	})
+
+</script>

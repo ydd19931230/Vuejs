@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>第二章-插值与表达式</title>
+	
+	<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		{{date}}
+		<p v-html="baiduLink"></p>
+		<p v-pre>{{这里的内容是不会被编译的}}</p>
+	</div>
+</body>
+</html>
+<script>
+	
+	/*简单的演示*/
+	var app = new Vue({
+		el:"#app",
+		data:{
+			date:new Date(),
+			/*使用v-html命令可以输出html内容而不是纯文本*/
+			baiduLink:'<a href="https://www.baidu.com" target="_blank">百度</a>',
+			test:'<h1>ydd</h1>'
+		},
+		mounted:function(){
+			var _this = this;
+			this.timer = setInterval(function(){
+				_this.date = new Date();
+			},1000);
+		},
+		beforeDestory:function(){
+			if(this.timer){
+				clearInterval(this.timer);
+			}
+		}
+	});
+	
+</script>
