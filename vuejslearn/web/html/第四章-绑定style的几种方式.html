@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第四章-绑定style的几种方式</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+
+</head>
+<body>
+<div id="app">
+    <!--style表示是使用一个对象，对象的属性为css属性，属性的值为css属性的值-->
+    <div :style="{color:color,fontSize:fontSize + 'px'}">我是一个快乐的div</div>
+    <!--当样式比较多的时候写style表达式比较麻烦，所以可以使用data、computed、methods中的值 更常用的是computed 这里就不举例了-->
+    <div :style="style">我是一个快乐的div2</div>
+    <!--算了还是举一个吧-->
+    <div :style="computedStyle">我是一个快乐的div3</div>
+
+</div>
+</body>
+</html>
+<script>
+
+    var app = new Vue({
+        el:"#app",
+        data:{
+            color:'red',
+            fontSize:25,
+            style:{
+                color:'red',
+                fontSize:'20px'
+            }
+        },
+        computed:{
+            computedStyle:function(){
+                return {
+                    color:this.color,
+                    fontSize:this.fontSize + 'px'
+                };
+            }
+        }
+    });
+</script>

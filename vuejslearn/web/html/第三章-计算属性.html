@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第三章-计算属性</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+<body>
+<div id="app">
+    {{reversedText}}
+    <p>{{ageAll}}</p>
+    <p>{{ageAll}}</p>
+    <p>{{ageAll}}</p>
+    <p>{{mAgeAll()}}</p>
+    <p>{{mAgeAll()}}</p>
+    <p>{{mAgeAll()}}</p>
+
+</div>
+</body>
+</html>
+<script>
+
+    var app = new Vue({
+        el:"#app",
+        data:{
+            text:'123,456',
+            package1:[{
+                name:'ydd',
+                age:27
+            },{
+                name:'hl',
+                age:28
+            }],
+            package2:[{
+                name:'lj',
+                age:32
+            }]
+        },
+        methods:{
+            mAgeAll:function(){
+                console.info("mAgeAll被调用了一次");
+                var ageAll = 0;
+                for(var i in this.package1){
+                    ageAll += this.package1[i].age;
+                }
+                for(var i in this.package2){
+                    ageAll += this.package2[i].age;
+                }
+                return ageAll;
+            }
+        },
+        /*所有的计算属性都写在computed属性内*/
+        computed:{
+            /*计算属性内的this指向vue实例*/
+            reversedText:function(){
+                return this.text.split(',').reverse().join(',');
+            },
+            //当计算属性所涉及到的data属性的值有任何变化时，计算属性都会重新计算
+            ageAll:function(){
+                console.info("ageAll被调用了一次");
+                var ageAll = 0;
+                for(var i in this.package1){
+                    ageAll += this.package1[i].age;
+                }
+                for(var i in this.package2){
+                    ageAll += this.package2[i].age;
+                }
+                return ageAll;
+            },
+            //计算属性也可以写成下面这种形式
+            //每个计算属性都有get和set方法，你可以自定义他们
+            ageAll2:{
+                get:function(){
+
+                    var ageAll = 0;
+                    for(var i in this.package1){
+                        ageAll += this.package1[i].age;
+                    }
+                    for(var i in this.package2){
+                        ageAll += this.package2[i].age;
+                    }
+                    return ageAll;
+                },
+                //这里的value是新的值
+                set:function(value){
+                    alert(value);
+                }
+            }
+        },
+        /*mounted:function(){
+            var _this = this;
+            setTimeout(function(){
+                _this.package1[0].age ++;
+            },2000);
+        }*/
+    });
+</script>

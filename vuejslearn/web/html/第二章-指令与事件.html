@@ -8,9 +8,9 @@
 <body>
     <div id="app">
         <a v-bind:href="url" v-bind:target="target">链接</a>
-        <img v-bind:src="imgUrl" />
+        <img :src="imgUrl" />
         <p v-if="show">点击按钮隐藏/显示</p>
-        <input type="button" v-on:click="handleClick" value="点我">
+        <input type="button" @click="handleClick" value="点我">
     </div>
 </body>
 </html>
@@ -24,16 +24,21 @@
         data:{
             url:'https://www.baidu.com',
             target:'_blank',
-            imgUrl:'/images/2.jpg',
+            imgUrl:'/images/1.gif',
             show:false
         },
         methods:{
+            /*vuejs也代理了methods中的方法*/
             handleClick:function(){
                 if(this.show){
                     this.show = false;
                 }else{
                     this.show = true;
                 }
+                this.test();
+            },
+            test:function(){
+                alert("test");
             }
         }
     });

@@ -42,6 +42,10 @@
       <p class="chapter"><a href="html/第二章-插值与表达式.html">第二章-插值与表达式.html</a></p>
       <p class="chapter"><a href="html/第二章-过滤器.html">第二章-过滤器.html</a></p>
       <p class="chapter"><a href="html/第二章-指令与事件.html">第二章-指令与事件.html</a></p>
+      <p class="chapter"><a href="html/第三章-计算属性.html">第三章-计算属性.html</a></p>
+      <p class="chapter"><a href="html/第四章-绑定class的几种方式.html">第四章-绑定class的几种方式.html</a></p>
+      <p class="chapter"><a href="html/第四章-绑定style的几种方式.html">第四章-绑定style的几种方式.html</a></p>
+      <p class="chapter"><a href="html/第五章-基本指令.html">第五章-基本指令.html</a></p>
     </div>
   </body>
 </html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第四章-基本指令</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <style>
+        [v-cloak]{
+            display:none;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <div v-cloak>{{cloak}}</div>
+    <div v-once>使用v-once:{{once}}</div>
+    <div style="color:red;">once的值:{{once}}</div>
+</div>
+</body>
+</html>
+<script>
+
+    var app = new Vue({
+        el:"#app",
+        data:{
+            cloak:'演示cloak',
+            once:'这个只渲染一次，即使once改变，也不重新渲染'
+        },
+        computed:{
+
+        }
+    });
+
+
+</script>

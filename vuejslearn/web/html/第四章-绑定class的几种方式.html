@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第四章-绑定class的几种方式</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <style>
+        .active{
+            color:green;
+        }
+        .error{
+            color: red;
+        }
+        .text-bold{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--class绑定可以与元素常规的class属性并存 当class表达式绑定的每项class值为真时，绑定该项class-->
+    <div class="static" :class="{'active':isActive,'error':isError}">我是个快乐的div</div>
+    <!--当class表达式过长的时候还可以绑定一个计算属性-->
+    <div class="static" :class="computedClass">我是个快乐的div2</div>
+    <!--除了计算属性，也可以绑定一个object类型的data对象或方法-->
+    <div class="static" :class="objectClass">我是个快乐的div3</div>
+    <!--当应用多个class时，可以使用数组语法。绑定一个数组里面是class列表-->
+    <div class="static" :class="['active','error']">我是个快乐的div4</div>
+    <!--上面的写法将class直接绑定，可以采用数组对象的写法来通过data的属性来控制class是否绑定-->
+    <!--这种写法可以使用data属性、计算属性和方法-->
+    <div class="static" :class="arrayObjectClass">我是个快乐的div5</div>
+
+</div>
+</body>
+</html>
+<script>
+
+    var app = new Vue({
+        el:"#app",
+        data:{
+            isActive:true,
+            isError:false,
+            textBold:'bold',
+            objectClass:{
+                'active':true,
+                'error':false
+            },
+            size:'large'
+        },
+        computed:{
+            computedClass:function(){
+                return {
+                    'active':this.isActive && !this.isError,
+                    'text-bold':this.textBold && this.textBold === 'bold'
+                }
+            },
+            arrayObjectClass:function(){
+                return ['btn',{
+                    'text-bold' :this.textBold && this.textBold === 'bold',
+                    ['btn-' + this.size] : this.size !== ''
+                }];
+            }
+        }
+    });
+</script>
