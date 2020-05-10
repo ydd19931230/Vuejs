@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第二章-指令与事件</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <a v-bind:href="url" v-bind:target="target">链接</a>
+        <img v-bind:src="imgUrl" />
+        <p v-if="show">点击按钮隐藏/显示</p>
+        <input type="button" v-on:click="handleClick" value="点我">
+    </div>
+</body>
+</html>
+<script>
+    /*前面几节前面带v-的即为指令。*/
+    /*指令的主要职责就是在数据发生变化时，相应的将某些行为应用在dom上*/
+    /*两个重要的指令 v-bind v-on 。*/
+    /*v-bind 的基本用途是动态改变html元素的属性，如id、class等。*/
+    var app = new Vue({
+        el:"#app",
+        data:{
+            url:'https://www.baidu.com',
+            target:'_blank',
+            imgUrl:'/images/2.jpg',
+            show:false
+        },
+        methods:{
+            handleClick:function(){
+                if(this.show){
+                    this.show = false;
+                }else{
+                    this.show = true;
+                }
+            }
+        }
+    });
+</script>
