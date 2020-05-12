@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/logo.png">
+    <title>第五章-列表指令</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        p{
+            margin:0;
+            padding:0;
+        }
+        .list-container{
+            display: inline-block;
+            width:300px;
+            height:300px;
+            background-color: pink;
+            padding:5px 10px;
+            vertical-align: top;
+        }
+        ul{
+            list-style: none;
+            margin:0;
+            padding:0;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="list-container">
+        <ul>
+            <!--最基本的用法,在遍历数组时，可以使用index来表示下标-->
+            <li v-for="(book,index) of books1">{{index + 1}} - {{book.name}}</li>
+        </ul>
+    </div>
+
+    <div class="list-container">
+        <ul>
+            <!--v-for可以使用在template上，对多组元素进行渲染-->
+            <template v-for="book of books2">
+                <li>
+                    <p>书名:{{book.name}}</p>
+                    <p>作者:{{book.author}}</p>
+                </li>
+            </template>
+        </ul>
+    </div>
+
+    <div class="list-container">
+        <ul>
+            <!--v-for也可以遍历对象的属性,还有两个额外的属性key和index,key表示属性的名称，index表示下标-->
+            <template v-for="(value,key,index) of superHero">
+                <li>
+                   {{index}} - {{key}} - {{value}}
+                </li>
+            </template>
+        </ul>
+    </div>
+
+    <div class="list-container">
+        <ul>
+            <!--v-for也可以迭代整数相当于生成一个数字序列-->
+            <template v-for="num of 10">
+                <li>
+                    {{num}}
+                </li>
+            </template>
+        </ul>
+    </div>
+
+    <div class="list-container">
+        <p>数组的更新</p>
+        <ul>
+            <template v-for="book of books3">
+                <li>
+                    {{book.name}}
+                </li>
+            </template>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
+<script>
+
+    var app = new Vue({
+        el:"#app",
+        data:{
+            books1:[{name:'java'},{name:'javascript'},{name:'vuejs'}],
+            books2:[{
+                name:'java',
+                author:'ydd'
+            },{
+                name:'javascript',
+                author:'lj'
+            }],
+            books3:[{
+                name:'java'
+            },{
+                name:'javascript'
+            },{
+                name:'c++'
+            }],
+            superHero:{
+                name:'ydd',
+                age:27,
+                gender:'male'
+            }
+        },
+        mounted:function(){
+            var _this = this;
+            /*数组的一些方法可能会改变原数组，但一些方法可能不会改变原数组，如果此时想要数据改变，将方法的返回值重新赋予原数组即可*/
+            this.timer = setTimeout(function(){
+                //_this.books3 = _this.books3.slice(0,2);//slice方法不会改变books3 需要将返回值重新赋予books3
+                //_this.books3[3] = {name:'ttt'}//能重新渲染
+                //_this.$set(_this.books3,3,{name:'老哥'});//或者
+                Vue.set(app.books3,3,{name:'老姐'});//webpack模式下，Vue默认不注入
+            },1000);
+        },
+        beforeDestory:function(){
+            if(this.timer){
+                clearInterval(this.timer);
+            }
+        },
+        computed:{
+
+        },
+        methods:{
+
+        }
+    });
+
+
+</script>

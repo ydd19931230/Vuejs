@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="/images/logo.png">
-    <title>第四章-基本指令</title>
+    <title>第五章-基本指令</title>
     <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
     <style>
         [v-cloak]{
@@ -15,7 +15,7 @@
 <body>
 <div id="app">
     <div v-cloak>{{cloak}}</div>
-    <div v-once>使用v-once:{{once}}</div>
+    <div v-once>使用v-once:{{once}}<p>我是子元素p:{{once}}</p></div>
     <div style="color:red;">once的值:{{once}}</div>
 </div>
 </body>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/logo.png">
+    <title>第五章-条件渲染指令</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+
+</head>
+<body>
+<div id="app">
+    <p v-if="status == 1">我是一个快乐的段落v-if</p>
+    <p v-else-if="status == 2">我是一个快乐的段落v-else-if</p>
+    <p v-else>我是一个快乐的段落v-else</p>
+    <template v-if="type == 'name'">
+        <label>用户名：</label>
+        <input type="text" placeholder="请输入用户名" key="input-name">
+    </template>
+    <template v-else>
+        <label>邮箱：</label>
+        <input type="text" placeholder="请输入邮箱" key="input-mail">
+    </template>
+    <input type="button" value="点我切换类型" @click="handleTypeChange">
+    <!--v-show只单纯的改变css的display的值，但元素还是存在的-->
+    <!--v-if如果表达式值为false，则元素都不被渲染出来，这是这两个命令的主要区别-->
+    <p v-show="isShow">v-show</p>
+    <p v-if="isShow">v-if</p>
+</div>
+</body>
+</html>
+<script>
+
+    var app = new Vue({
+        el:"#app",
+        data:{
+            status:1,
+            type:'name',
+            isShow:true
+        },
+        computed:{
+
+        },
+        methods:{
+            handleTypeChange:function(){
+                if(this.type == 'name'){
+                    this.type = 'mail';
+                }else{
+                    this.type = 'name';
+                }
+            }
+        }
+    });
+
+
+</script>

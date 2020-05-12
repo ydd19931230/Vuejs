@@ -1,0 +1,71 @@
+*{
+    box-sizing: border-box;
+    padding:0;
+    margin:0;
+}
+[v-cloak] {
+    display:none;
+}
+body{
+    font-family:"Microsoft YaHei UI"
+}
+
+.table-data{
+    margin:0 auto;
+    width:80%;
+    text-align:center;
+    border:1px solid #ccc;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.table-data th,.table-data td,.table-data tr{
+    border:1px solid #ccc;
+    padding:10px 10px;
+}
+.table-data th {
+    font-weight: normal;
+    background-color:#eee;
+    color:#666;
+    font-size:16px;
+}
+
+
+
+.table-data tr:hover{
+    background-color:#eee;
+}
+
+.btn {
+
+    background-color:#fff;
+    border:1px solid #ccc;
+    outline: none;
+    cursor:pointer;
+}
+
+.btn-del{
+    height:24px;
+    width:60px;
+    line-height:24px;
+    border-radius:20px;
+}
+
+.btn-count{
+    height:20px;
+    width:20px;
+    line-height:20px;
+}
+
+.span-count{
+    display:inline-block;
+    width:40px;
+    height:20px;
+    line-height:20px;
+}
+.total-price{
+    width:80%;
+    margin:5px auto;
+}
+
+

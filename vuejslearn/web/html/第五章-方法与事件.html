@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/logo.png">
+    <title>第五章-方法与事件</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <p>{{counter}}</p>
+    <input type="button" value="+1" @click="addCount()">
+    <input type="button" value="+10" @click="addCount(10)">
+    <a href="http://www.baidu.com" @click.prevent="linkClick(123,'222',$event)">百度</a>
+    <p><input type="button" value="本宝宝只触发一次" @click.once="onceClick()"></p>
+    <div :style="cssStyle" @click.self="selfClick()">
+        {{msg}}
+        <div :style="childCss"></div>
+    </div>
+    <!--用来控制冒泡顺序-->
+    <div @click.capture="divClick()">
+        <a href="#" @click="linkClick()">capture演示</a>
+    </div>
+
+    <div>
+        <input type="text" @keyup.13="tabClick">
+    </div>
+</div>
+</body>
+</html>
+<script>
+
+    var app = new Vue({
+        el:"#app",
+        data:{
+            counter:0,
+            cssStyle:{
+                height:'200px',
+                width:'200px',
+                backgroundColor:'pink',
+                color:'yellow'
+            },
+            childCss:{
+                height:'20px',
+                width:'20px',
+                backgroundColor: 'green'
+            },
+            msg:'123'
+        },
+        mounted:function(){
+
+        },
+        beforeDestory:function(){
+
+        },
+        computed:{
+
+        },
+        methods:{
+            addCount(count = 1){
+                this.counter += count;
+            },
+            linkClick(a,b,c){
+                console.info(a,b,c);
+
+            },
+            onceClick(){
+                console.info("本宝宝只触发一次");
+            },
+            selfClick(){
+                this.cssStyle.color = 'white';
+                this.cssStyle.backgroundColor = 'black';
+            },
+            linkClick(){
+                console.info('linkClick');
+            },
+            divClick(){
+                console.info('divClick');
+            },
+            tabClick(){
+                console.info('按键');
+            }
+        }
+    });
+
+
+</script>
