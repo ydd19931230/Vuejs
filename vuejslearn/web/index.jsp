@@ -51,6 +51,8 @@
       <p class="chapter"><a href="html/第五章-列表指令.html">第五章-列表指令.html</a></p>
       <p class="chapter"><a href="html/第五章-方法与事件.html">第五章-方法与事件.html</a></p>
       <p class="chapter"><a href="html/第五章-购物车.html">第五章-购物车.html</a></p>
+      <p class="chapter"><a href="html/第六章-表单与v-model.html">第六章-表单与v-model.html</a></p>
+      <p class="chapter"><a href="html/第七章-组件.html">第七章-组件.html</a></p>
     </div>
   </body>
 </html>

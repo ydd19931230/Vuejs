@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/logo.png">
+    <title>第六章-表单与v-model</title>
+    <script src="/js/vue.js"></script>
+    <style>
+        *{
+            box-sizing: border-box;
+
+        }
+        .devide{
+            width:calc(100% / 3);
+            border:1px solid #ccc;
+            display:inline-block;
+            padding:5px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="devide">
+            <p>input：</p>
+            <input type="text" v-model="message" placeholder="输入...">
+            <p>输入的内容是：{{message}}</p>
+        </div><!--
+        --><div class="devide">
+            <p>textarea：</p>
+            <textarea cols="30" rows="10" v-model="messageTextArea"></textarea>
+            <p>输入的内容是：{{messageTextArea}}</p>
+        </div><!--
+        --><div class="devide">
+            <p>在中文的状况下实时显示：</p>
+            <input type="text" @input="handleInput" placeholder="输入...">
+            <p>输入的内容是：{{showNow}}</p>
+        </div><!--
+        --><div class="devide">
+            <p>单选按钮：</p>
+            <input type="radio" id="html" v-model="checkedRadio" value="html"><label for="html">html</label>
+            <input type="radio" id="js" v-model="checkedRadio" value="js"><label for="js">js</label>
+            <input type="radio" id="css" v-model="checkedRadio" value="css"><label for="css">css</label>
+            <p>选中的是：{{checkedRadio}}</p>
+        </div><!--
+        --><div class="devide">
+            <p>复选按钮：</p>
+            <input type="checkbox" v-model="checkbox" value="html" id="chtml"><label for="chtml">html</label>
+            <input type="checkbox" v-model="checkbox" value="css" id="ccss"><label for="ccss">css</label>
+            <input type="checkbox" v-model="checkbox" value="js" id="cjs"><label for="cjs">js</label>
+            <p>选择的值：{{checkbox}}</p>
+        </div><!--
+        --><div class="devide">
+            <p>下拉框：</p>
+            <select v-model="selected">
+                <option v-for="item of items" :value="item.value">{{item.text}}</option>
+            </select>
+            <p>选择的值：{{selected}}</p>
+        </div><!--
+        --><div class="devide">
+            <p>.lazy修饰符：在输入框失去焦点或输入回车时同步到对应的model</p>
+            <input type="text" v-model.lazy="lazyMessage">
+            <p>输入的值：{{lazyMessage}}</p>
+        </div><!--
+        --><div class="devide">
+            <p>.trim修饰符：去除首尾的空格</p>
+            <input type="text" v-model.trim="trimMessage">
+            <p>输入的值：{{trimMessage}}</p>
+        </div><!--
+        --><div class="devide">
+            <p>.number修饰符：将输入的内容转为数字</p>
+            <input type="number" v-model.number="numberMessage">
+            <p>numberMessage的类型：{{typeof numberMessage}}</p>
+            <p>输入的值：{{numberMessage}}</p>
+        </div>
+
+    </div>
+</body>
+</html>
+<script>
+    var app = new Vue({
+        el:'#app',
+        data:{
+            message:'',
+            messageTextArea:'',
+            showNow:'',
+            checkedRadio:'',
+            checkbox:[],
+            selected:'vuejs',
+            items:[{
+                value:'js',
+                text:'JavaScript'
+            },{
+                value:'vuejs',
+                text:'VueJs'
+            },{
+                value:'java',
+                text:'Java'
+            }],
+            lazyMessage:'',
+            trimMessage:'',
+            numberMessage:0
+        },
+        methods:{
+            handleInput(e){
+                this.showNow = e.target.value;
+            }
+        }
+    });
+
+</script>

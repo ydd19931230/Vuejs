@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/logo.png">
+    <title>第七章-组件</title>
+    <script src="/js/vue.js"></script>
+    <style>
+        *{
+            box-sizing: border-box;
+
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="parentMessage">
+        <my-component :message="parentMessage"></my-component>
+        <my-component :message="parentMessage"></my-component>
+        <my-component :message="parentMessage"></my-component>
+    </div>
+</body>
+</html>
+<script>
+    Vue.component('my-component',{
+        //template:'<div style="width:180px;height:100px;border:1px solid #ccc">这是个组件</div>'
+        //template:'<template>这是个组件</template>',
+        //template:'<div><input tyoe="text" v-model="message"><input type="button" @click="buttonClick" value="点我弹出个alert"><p>输入的内容是：{{message}}</p></div>',
+        template:'<div><input type="button" @click="buttonClick" value="点我弹出个alert"><p>输入的内容是：{{message}}</p></div>',
+        data:function(){
+            return {};
+        },
+        props:['message'],
+        methods: {
+            buttonClick:function(){
+                alert("按钮被点击了");
+            }
+        }
+
+    });
+
+    var app = new Vue({
+        el:'#app',
+        data:{
+            parentMessage:''
+        },
+        methods:{
+
+        }
+    });
+
+</script>
