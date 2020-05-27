@@ -25,12 +25,12 @@
                     <td>{{item.name}}</td>
                     <td>{{item.price}}</td>
                     <td>
-                        <input class="btn btn-count" type="button" value="-" @click="decCount(item.id)">
+                        <input class="btn btn-count" type="button" value="-" @click="decCount(index)">
                         <span class="span-count">{{item.count}}</span>
-                        <input class="btn btn-count" type="button" value="+" @click="addCount(item.id)">
+                        <input class="btn btn-count" type="button" value="+" @click="addCount(index)">
                     </td>
                     <td>
-                        <input class="btn btn-del"type="button" value="移除" @click="removeItem(item.id)">
+                        <input class="btn btn-del"type="button" value="移除" @click="removeItem(index)">
                     </td>
                 </tr>
             </template>

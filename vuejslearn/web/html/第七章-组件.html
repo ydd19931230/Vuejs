@@ -14,38 +14,88 @@
 </head>
 <body>
     <div id="app">
-        <input type="text" v-model="parentMessage">
-        <my-component :message="parentMessage"></my-component>
-        <my-component :message="parentMessage"></my-component>
-        <my-component :message="parentMessage"></my-component>
+       <!-- <p>父组件输入的内容: <input type="text" v-model="message"></p>
+        <p>父组件obj:name={{obj.name}},age={{obj.age}}</p>-->
+        <!--<my-component-global :parent-message="message" :obj="obj"></my-component-global>-->
+        <!--<my-component-local></my-component-local>-->
+        <component-obj :prop-a="propA"></component-obj>
+        <!-- <p>total : {{total}}</p>
+        <component-child @increase="handleTotal" @reduce="handleTotal"></component-child>-->
     </div>
 </body>
 </html>
 <script>
-    Vue.component('my-component',{
-        //template:'<div style="width:180px;height:100px;border:1px solid #ccc">这是个组件</div>'
-        //template:'<template>这是个组件</template>',
-        //template:'<div><input tyoe="text" v-model="message"><input type="button" @click="buttonClick" value="点我弹出个alert"><p>输入的内容是：{{message}}</p></div>',
-        template:'<div><input type="button" @click="buttonClick" value="点我弹出个alert"><p>输入的内容是：{{message}}</p></div>',
-        data:function(){
-            return {};
+    //注册一个组件
+    Vue.component('my-component-global',{
+        template:'<div><p>子组件自己的message：{{message}}</p><p>来自父组件的message：{{parentMessage}}</p><p><input type="button" @click="handleClick" value="改变父组件传入的对象"></p></div>',
+        props:['parentMessage','obj'],
+        data(){
+            return {
+                message:'子组件的message',
+            }
         },
-        props:['message'],
-        methods: {
-            buttonClick:function(){
-                alert("按钮被点击了");
+        methods:{
+            handleClick(){
+                this.obj.name="lj";
             }
         }
-
     });
+
+    Vue.component('component-obj',{
+        props:{
+            propA:{
+                type:Number,
+                required:true,
+                default:0,
+                validator:function(value){
+                    return value > 10;
+                }
+            }
+        },
+        template:'<div>{{propA}}</div>'
+    });
+    Vue.component('component-child',{
+        template:'<div><p>counter:{{counter}}</p><input type="button" @click="handleIncrease" value="增加"><input type="button" @click="handleReduce" value="减少"></div>',
+        data(){
+            return {
+                counter:0
+            }
+        },
+        methods:{
+            handleIncrease(){
+                this.counter++;
+                this.$emit("increase",this.counter);
+            },
+            handleReduce(){
+                this.counter--;
+                this.$emit("reduce",this.counter);
+            }
+        }
+    })
+
+
+
 
     var app = new Vue({
         el:'#app',
         data:{
-            parentMessage:''
+            message:'',
+            obj:{
+                name:'ydd',
+                age:28
+            },
+            propA:11,
+            total:0
         },
         methods:{
-
+            handleTotal(value){
+                this.total=value;
+            }
+        },
+        components:{
+            'my-component-local':{
+                template:'<div>这是局部组件的内容</div>'
+            }
         }
     });
 

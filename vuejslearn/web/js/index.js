@@ -30,34 +30,18 @@ var app = new Vue({
         }
     },
     methods:{
-        removeItem:function(id){
-            var index = 0;
-            for(;index <this.items.length;index++){
-                if(this.items[index].id == id){
-                    break;
-                }
-            }
+        removeItem:function(index){
             this.items.splice(index,1);
         },
-        decCount:function(id){
-            var index = 0;
-            for(;index<this.items.length;index++){
-                if(this.items[index].id == id){
-                    if(this.items[index].count == 1) {
-                        break;
-                    }else{
-                        this.items[index].count --;
-                    }
-                }
+        decCount:function(index){
+            if(this.items[index].count == 1){
+                return ;
+            }else{
+                this.items[index].count --;
             }
         },
-        addCount:function (id) {
-            for(var i in this.items){
-                if(this.items[i].id == id){
-                    this.items[i].count ++ ;
-                    break;
-                }
-            }
+        addCount:function (index) {
+           this.items[index].count ++;
         }
     }
 });
