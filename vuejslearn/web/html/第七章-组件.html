@@ -18,9 +18,16 @@
         <p>父组件obj:name={{obj.name}},age={{obj.age}}</p>-->
         <!--<my-component-global :parent-message="message" :obj="obj"></my-component-global>-->
         <!--<my-component-local></my-component-local>-->
-        <component-obj :prop-a="propA"></component-obj>
-        <!-- <p>total : {{total}}</p>
+        <!--<component-obj :prop-a="propA"></component-obj>-->
+         <!--<p>total : {{total}}</p>
         <component-child @increase="handleTotal" @reduce="handleTotal"></component-child>-->
+        <!--<p>total : {{total}}</p>
+        <input type="button" @click="total++;" value="total +1">
+        <component-child-two v-model="total"></component-child-two>-->
+        <!--<p>total : {{total}}</p>
+        <input type="button" @click="total++;" value="total +1">
+        <component-data-bind v-model="total"></component-data-bind>-->
+        <!--<component-data-bind :value="total" @input="handleTotal"></component-data-bind>-->
     </div>
 </body>
 </html>
@@ -69,6 +76,31 @@
             handleReduce(){
                 this.counter--;
                 this.$emit("reduce",this.counter);
+            }
+        }
+    });
+
+    Vue.component('component-child-two',{
+        template:'<div>{{value}}<input type="button" value="点我+1" @click="handleClick"></div>',
+        data(){
+            return {
+                counter:0
+            }
+        },
+        methods:{
+            handleClick(){
+                this.counter++;
+                this.$emit("input",this.counter);
+            }
+        }
+    });
+
+    Vue.component('component-data-bind',{
+        template:'<div><input type="text" @input="updateValue" :value="value"></div>',
+        props:['value'],
+        methods:{
+            updateValue(e){
+                this.$emit('input',e.target.value);
             }
         }
     })
