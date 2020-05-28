@@ -28,6 +28,11 @@
         <input type="button" @click="total++;" value="total +1">
         <component-data-bind v-model="total"></component-data-bind>-->
         <!--<component-data-bind :value="total" @input="handleTotal"></component-data-bind>-->
+        <!--<bus-one></bus-one>
+        <bus-two></bus-two>-->
+        <!--<p>app实例中的message：{{message}}</p>
+        <parent-chain></parent-chain>-->
+        <child-ref ref="childRef"></child-ref>
     </div>
 </body>
 </html>
@@ -103,10 +108,70 @@
                 this.$emit('input',e.target.value);
             }
         }
+    });
+    var bus = new Vue();
+    Vue.component('bus-one',{
+        template:'<div><p>收到的消息：{{message1}}</p><input type="button" @click="handleClick" value="发送消息" key="1"></div>',
+        data(){
+            return {
+                message1:''
+            }
+        },
+        methods:{
+            handleClick(){
+                bus.$emit("bus-one-send","组件1发来消息了");
+            }
+        },
+        mounted:function(){
+            var _this = this;
+            bus.$on("bus-two-send",function(message){
+                _this.message1 = message;
+            });
+        }
+    });
+    Vue.component('bus-two',{
+        template:'<div><p>收到的消息：{{message2}}</p><input type="button" @click="handleClick" value="发送消息" key="2"></div>',
+        data(){
+            return {
+                message2:''
+            }
+        },
+        methods:{
+            handleClick(){
+                bus.$emit("bus-two-send","组件2发来消息了");
+            }
+        },
+        mounted:function(){
+            var _this = this;
+            bus.$on('bus-one-send',function(message){
+                _this.message2 = message;
+            });
+        }
     })
 
+    Vue.component('parent-chain',{
+        template:'<div><p>子组件中的message：{{message}}</p><input type="text" @input="handleInput"></div>',
+        data(){
+            return {
+                message:''
+            }
+        },
+        methods:{
+            handleInput(e){
+                this.message = e.target.value;
+                this.$parent.message=e.target.value;
+            }
+        }
+    });
 
-
+    Vue.component('child-ref',{
+        template:'<div>message:{{message}}</div>',
+        data(){
+            return {
+                message:''
+            }
+        }
+    });
 
     var app = new Vue({
         el:'#app',
@@ -127,6 +192,17 @@
         components:{
             'my-component-local':{
                 template:'<div>这是局部组件的内容</div>'
+            }
+        },
+        mounted:function(){
+            var _this = this;
+            this.timeoutVar = setTimeout(function(){
+                _this.$refs.childRef.message = "父组件改变了message";
+            },2000);
+        },
+        beforeDestory(){
+            if(this.timeoutVar){
+                clearTimeout(this.timeoutVar);
             }
         }
     });
