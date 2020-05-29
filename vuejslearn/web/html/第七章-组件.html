@@ -32,7 +32,17 @@
         <bus-two></bus-two>-->
         <!--<p>app实例中的message：{{message}}</p>
         <parent-chain></parent-chain>-->
-        <child-ref ref="childRef"></child-ref>
+        <!--<child-ref ref="childRef"></child-ref>-->
+        <!--<slot-child-1>
+            <child-ref ref="childRef"></child-ref>
+        </slot-child-1>-->
+        <!--<many-slot>
+            <p slot="header">这是头部</p>
+            1234
+            <p>dkfjeifj</p>
+            <h1>dfefe</h1>
+            <p slot="footer">这是脚部</p>
+        </many-slot>-->
     </div>
 </body>
 </html>
@@ -172,6 +182,13 @@
             }
         }
     });
+    Vue.component('slot-child-1',{
+        template:'<div>子组件<slot></slot></div>'
+
+    });
+    Vue.component('many-slot',{
+        template:'<div><slot name="header"></slot><slot></slot><slot name="footer"></slot></div>'
+    })
 
     var app = new Vue({
         el:'#app',
@@ -182,7 +199,8 @@
                 age:28
             },
             propA:11,
-            total:0
+            total:0,
+            slotMessage:'这是父组件的作用域'
         },
         methods:{
             handleTotal(value){
@@ -197,7 +215,7 @@
         mounted:function(){
             var _this = this;
             this.timeoutVar = setTimeout(function(){
-                _this.$refs.childRef.message = "父组件改变了message";
+                //_this.$refs.childRef.message = "父组件改变了message";
             },2000);
         },
         beforeDestory(){

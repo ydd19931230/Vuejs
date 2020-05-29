@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/logo.png">
+    <title>第七章-组件-slot</title>
+    <script src="/js/vue.js"></script>
+    <style>
+        *{
+            box-sizing: border-box;
+
+        }
+        .container {
+            border:1px solid #ccc;
+            width:300px;
+            vertical-align: top;
+            display:inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <p>单个slot，不定义name属性，所有组件标签的元素都插入到slot中</p>
+            <slot-1>
+                <h1>替换slot标签内容的h1元素</h1>
+            </slot-1>
+        </div>
+        <div class="container">
+            <p>多个slot，定义name属性，插入在组件标签中元素的slot属性，插入到对应的slot</p>
+            <slot-2>
+                <h1 slot="header">header部分</h1>
+                <div slot="body">body部分</div>
+                <h4 slot="footer">footer部分</h4>
+            </slot-2>
+        </div>
+        <div class="container">
+            <p>作用域插槽，将子组件的某个数据绑定到slot上，供插入子组件标签的元素通过scope属性使用</p>
+            <slot-3>
+
+                <template scope="data">
+                    <p>{{message}}</p>
+                    <p>
+                        {{data.message}}
+                    </p>
+                </template>
+            </slot-3>
+        </div>
+        <div class="container">
+            <slot-4 :list="list">
+                <template scope="data">
+                    <ul>
+                        <li v-for="item of data.list">name:{{item.name}},age:{{item.age}}</li>
+                    </ul>
+                </template>
+            </slot-4>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    Vue.component('slot-1',{
+        template:'<div><slot>如果slot-1标签内没有任何内容，这些内容将替换slot标签的内容</slot></div></div>'
+    });
+    Vue.component('slot-2',{
+        template:'<div><slot name="header"></slot><slot name="body"></slot><slot name="footer"></slot></div>'
+    });
+
+    Vue.component('slot-3',{
+        template:'<div><slot :message="message"></slot></div>',
+        data(){
+            return {
+                message:'这是子组件的message'
+            }
+        }
+    });
+    Vue.component('slot-4',{
+        template:'<div><slot :list="list"></slot></div>',
+        props:{
+            list:{
+                type:Array,
+                default(){
+                    return [];
+                }
+            }
+        }
+    })
+
+    var app = new Vue({
+        el:'#app',
+        data:{
+            message:'这是父组件的message',
+            list:[{
+                name:'ydd',
+                age:27
+            },{
+                name:'hqh',
+                age:31
+            }]
+        },
+        methods:{
+
+        },
+        mounted:function(){
+
+        },
+        beforeDestory(){
+
+        }
+    });
+
+</script>
