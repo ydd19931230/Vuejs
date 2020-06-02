@@ -54,6 +54,10 @@
       <p class="chapter"><a href="html/第六章-表单与v-model.html">第六章-表单与v-model.html</a></p>
       <p class="chapter"><a href="html/第七章-组件.html">第七章-组件.html</a></p>
       <p class="chapter"><a href="html/第七章-组件-slot.html">第七章-组件-slot.html</a></p>
+      <p class="chapter"><a href="html/第七章-组件的高级用法.html">第七章-组件的高级用法.html</a></p>
+      <p class="chapter"><a href="html/第七章-组件-其他.html">第七章-组件-其他.html</a></p>
+      <p class="chapter"><a href="html/第七章-数字输入框组件.html">第七章-数字输入框组件.html</a></p>
+      <p class="chapter"><a href="html/第七章-标签页组件.html">第七章-标签页组件.html</a></p>
     </div>
   </body>
 </html>

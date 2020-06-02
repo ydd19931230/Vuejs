@@ -55,6 +55,23 @@
                 </template>
             </slot-4>
         </div>
+        <div class="container">
+            <p>通过$slots.slotName可以访问特定name的slot的内容</p>
+            <slot-5>
+                <template slot="header">
+                    <div>123</div>
+                    <div>456</div>
+                </template>
+                <template slot="footer">
+                    <h1>rtq</h1>
+                    <h1>w99</h1>
+                </template>
+            </slot-5>
+        </div>
+        <div class="container">
+            <p>通过组件的name属性递归调用</p>
+            <slot-6 :count="count"></slot-6>
+        </div>
     </div>
 </body>
 </html>
@@ -84,7 +101,19 @@
                 }
             }
         }
-    })
+    });
+    Vue.component('slot-5',{
+        template:'<div><slot name="header"></slot><slot name="footer"></slot></div>',
+        mounted(){
+            console.info(this.$slots.header);
+            console.info(this.$slots.footer);
+        }
+    });
+    Vue.component('slot-6',{
+        name:'slot-6',
+        template:'<div><h1>这是个第{{count}}标题</h1><slot-6 :count="count + 1" v-if="count < 5" ></slot-6></div>',
+        props:['count'],
+    });
 
     var app = new Vue({
         el:'#app',
@@ -96,7 +125,8 @@
             },{
                 name:'hqh',
                 age:31
-            }]
+            }],
+            count:0
         },
         methods:{
 

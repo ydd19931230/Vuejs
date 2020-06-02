@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/logo.png">
+    <title>第七章-组件的高级用法</title>
+    <script src="/js/vue.js"></script>
+    <style>
+        *{
+            box-sizing: border-box;
+
+        }
+        .container {
+            border:1px solid #ccc;
+            width:300px;
+            vertical-align: top;
+            display:inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <p>递归组件：在定义组件时使用name属性，即可在组件内部调用自身了</p>
+            <component-1 :count="0"></component-1>
+        </div><!--
+        --><div class="container">
+            <p>内联模板：在组件标签上定义inline-template，组件自定义标签间的内容即为组件的模板</p>
+            <component-2 inline-template>
+                <div>
+                    <p>父组件定义的message：{{message}}</p><!--message 会警告未定义？？？-->
+                    <p>子组件定义的msg：{{msg}}</p>
+                </div>
+            </component-2>
+        </div><!--
+        --><div class="container">
+            <p>动态组件：通过vue提供的特殊标签component配合is可以动态改变组件</p>
+            <component :is="comX"></component>
+            <input type="button" @click="handChangeType('A')" value="组件A">
+            <input type="button" @click="handChangeType('B')" value="组件B">
+            <input type="button" @click="handChangeType('C')" value="组件C">
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    Vue.component('component-1',{
+        name:'component-1',
+        template:'<div><p>这是第{{count + 1}}次</p><component-1 :count="count + 1" v-if="count < 3"></component-1></div>',
+        props:['count']
+    });
+    Vue.component('component-2',{
+        data(){
+            return {
+                msg:'子组件声明的数据'
+            }
+        }
+    })
+
+    var app = new Vue({
+        el:'#app',
+        data:{
+            message:'父组件声明的数据',
+            comX:'comA'
+        },
+        methods:{
+            handChangeType(component){
+                this.comX = 'com' + component;
+            }
+        },
+        components:{
+            comA:{
+                template:'<div>组件A</div>'
+            },
+            comB:{
+                template:'<div>组件B</div>'
+            },
+            comC:{
+                template:'<div>组件C</div>'
+            }
+        }
+    });
+
+</script>

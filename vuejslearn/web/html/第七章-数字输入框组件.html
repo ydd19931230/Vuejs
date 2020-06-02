@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/logo.png">
+    <title>第七章-数字输入框组件</title>
+    <script src="/js/vue.js"></script>
+    <style>
+        *{
+            box-sizing: border-box;
+
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <p>父组件传入数字：<input type="text" @change="handleParentInput" :value="value"></p>
+        <component-my-input v-model="value" :max="max" :min="min"></component-my-input>
+    </div>
+</body>
+</html>
+<script>
+    Vue.component('component-my-input',{
+        template:'<div><input type="text" :value="currentVal" @change="handleInput"><button @click="handleAdd" :disabled="currentVal >=max">+</button><button @click="handleDec" :disabled="currentVal <= min">-</button></div>',
+        props:{
+            value:{
+                type:Number,
+                default:0
+            },
+            max:{
+                type:Number,
+                default:Infinity
+            },
+            min:{
+                type:Number,
+                default:-Infinity
+            }
+        },
+        data(){
+            return {
+                currentVal:this.value
+            }
+        },
+        watch:{
+            currentVal(val){
+                this.$emit("input",val);
+            },
+            value(val){
+                this.updateValue(val);
+            }
+        },
+        methods:{
+            handleAdd(){
+                if(this.currentVal >= this.max) return ;
+                this.currentVal +=1;
+            },
+            handleDec(){
+                if(this.currentVal <= this.min) return ;
+                this.currentVal -=1 ;
+            },
+            updateValue(value){
+                if (isNumber(value)) {
+                    value = Number(value);
+                    this.currentVal = value;//这句很重要 永远记住vuejs只有当数据改变时才会重新渲染视图
+                    if(value > this.max) this.currentVal = this.max;
+                    if(value < this.min) this.currentVal = this.min;
+                }else {
+                    var _currentVal = this.currentVal;
+                    this.currentVal = value;//这句很重要 永远记住vuejs只有当数据改变时才会重新渲染视图
+                    this.currentVal = _currentVal;
+                }
+            },
+            handleInput(e){
+                var val = e.target.value.trim();
+                var max = this.max;
+                var min = this.min;
+               /* if(isNumber(val)){
+                    val = Number(val);*/
+                    this.updateValue(val);
+                    /*this.currentVal = val;
+                    if(val > max){
+                        this.currentVal = max;
+                    }else if(val < this.min){
+                        this.currentVal = min;
+                    }*/
+               /* }else{
+                    e.target.value = this.currentVal;
+                }*/
+            }
+        },
+        mounted(){
+            this.updateValue(this.value);
+        }
+    })
+
+
+    var app = new Vue({
+        el:'#app',
+        data:{
+            value:5,
+            max:100,
+            min:0
+        },
+        methods:{
+            handleParentInput(e){
+                var value = e.target.value.trim();
+                if(isNumber(value)){
+                    value = Number(value);
+                    this.value = value;
+                    if(value >= this.max) this.value = this.max;
+                    if(value <= this.min) this.value = this.min;
+                }else{
+                    e.target.value = this.value;
+                }
+            }
+        }
+    });
+
+    function isNumber(value){
+        return (/(^-?[0-9]+\.{1}\d+$)|(^-?[1-9][0-9]*$)|(^-?0{1}$)/).test(value + '');
+    }
+
+</script>

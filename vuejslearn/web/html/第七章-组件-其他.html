@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/logo.png">
+    <title>第七章-组件-其他</title>
+    <script src="/js/vue.js"></script>
+    <style>
+        *{
+            box-sizing: border-box;
+
+        }
+        .container {
+            border:1px solid #ccc;
+            width:300px;
+            vertical-align: top;
+            display:inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+           <div id="div" v-if="flag">获取div的text</div>
+           <input type="button" value="显示" @click="handleShow">
+        </div>
+        <div class="container">
+            <p>手动挂载实例演示</p>
+            <div id="container"></div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    var myComponent = Vue.extend({
+        template:'<div>手动挂载实例<p>{{message}}</p></div>',
+        data(){
+            return{
+                message:'这是条信息'
+            }
+        }
+    });
+    new myComponent().$mount("#container");
+    var app = new Vue({
+        el:'#app',
+        data:{
+            flag:false
+        },
+        methods:{
+            handleShow(){
+                this.flag = true;
+                this.$nextTick(function(){
+                    var text = document.getElementById("div").innerText;
+                    console.info(text);
+                })
+            }
+        }
+    });
+
+</script>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/images/logo.png">
+    <title>第七章-标签页组件</title>
+    <script src="/js/vue.js"></script>
+    <style>
+        *{
+            box-sizing: border-box;
+
+        }
+
+        .pane{
+            width:500px;
+            height:400px;
+            border:1px solid #ddd;
+            padding:10px;
+        }
+        .tabs-content{
+            width:500px;
+            height:400px;
+        }
+
+        .tab{
+            display:inline-block;
+            padding:10px 20px;
+            cursor: pointer;
+            border-top:3px solid black;
+            border-right:1px solid #dddddd;
+            border-left:1px solid #dddddd;
+            border-bottom:1px solid #dddddd;
+            margin-right:5px;
+            position:relative;
+            top:1px;
+        }
+        .tab-active{
+            border-bottom:1px solid #fff;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <tabs v-model="activeTab">
+            <tabs-pane pane-name="pane-1" pane-label="标签一">标签页一的内容</tabs-pane>
+            <tabs-pane pane-name="pane-2" pane-label="标签二">标签页二的内容</tabs-pane>
+            <tabs-pane pane-name="pane-3" pane-label="标签三">标签页三的内容</tabs-pane>
+        </tabs>
+    </div>
+</body>
+</html>
+<script>
+    Vue.component('tabs',{
+        template:'<div class="tabs"><div class="tabs-nav"><div v-for="tab of tabs" :class="initTabClass(tab.paneName)" @click="handleSwitch(tab.paneName)">{{tab.paneLabel}}</div></div><div class="tabs-content"><slot></slot></div></div>',
+        props:{
+            value:{
+                type:[String,Number]
+            }
+        },
+        data(){
+            return {
+                tabs:[],
+                currentTab:this.value
+            }
+        },
+        methods:{
+            addTab(tab){
+                this.tabs.push({paneName:tab.paneName,paneLabel:tab.paneLabel});
+            },
+            initTabClass(name){
+                return ['tab',{
+                    'tab-active': name === this.currentTab
+                }];
+            },
+            handleSwitch(name){
+                this.currentTab = name;
+            },
+            getTabs(){
+                return this.$children.filter(function(item){
+                    return item.$options.name === 'pane';
+                })
+            },
+            updateStatus(){
+                var tabList = this.getTabs();
+                for(var i in tabList){
+                    var tab = tabList[i];
+                    if(tab.paneName === this.currentTab){
+                        tab.show = true;
+                    }else {
+                        tab.show = false;
+                    }
+                }
+            }
+        },
+        watch:{
+            currentTab(){
+                this.updateStatus();
+            }
+        },
+        mounted() {
+            this.updateStatus();
+        }
+
+    });
+
+    Vue.component('tabs-pane',{
+        name:'pane',
+        template:'<div v-show="show" class="pane"><slot></slot></div>',
+        props:{
+            paneName:{
+                type:String
+            },
+            paneLabel:{
+                type:String
+            }
+        },
+        data(){
+            return {
+                show:false
+            }
+        },
+        //挂载的时候通知父元素tabs
+        mounted(){
+            this.$parent.addTab(this);
+        }
+    });
+
+
+    var app = new Vue({
+        el:'#app',
+        data:{
+            activeTab:'pane-1'
+        },
+        methods:{
+
+        }
+    });
+
+</script>
