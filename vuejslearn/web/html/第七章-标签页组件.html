@@ -82,7 +82,7 @@
             getTabs(){
                 return this.$children.filter(function(item){
                     return item.$options.name === 'pane';
-                })
+                });
             },
             updateStatus(){
                 var tabList = this.getTabs();
